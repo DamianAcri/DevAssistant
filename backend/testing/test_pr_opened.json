@@ -1,0 +1,12 @@
+{
+  "action": "opened",
+  "number": 42,
+  "pull_request": {
+    "title": "Add webhook signature verification",
+    "body": "This PR adds HMAC verification middleware.",
+    "html_url": "https://github.com/example/repo/pull/42"
+  },
+  "repository": {
+    "full_name": "example/repo"
+  }
+}
