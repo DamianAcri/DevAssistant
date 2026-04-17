@@ -77,6 +77,17 @@ func GitHubWebhookHandler(w http.ResponseWriter, r *http.Request) {
 				w.WriteHeader(http.StatusOK)
 				return
 			}
+
+			if wrEvent.WorkflowRun.Conclusion != "failure" {
+        		log.Printf(
+            		"ignoring workflow_run conclusion=%s repo=%s workflow=%q",
+            		wrEvent.WorkflowRun.Conclusion,
+            		wrEvent.Repository.FullName,
+            		wrEvent.WorkflowRun.Name,
+        		)	
+        		w.WriteHeader(http.StatusOK)
+        		return
+    		}
 			
 			// log relevant info about the workflow run event
 			log.Printf("Received workflow_run event: action=%s name=%s conclusion=%s repo=%s\n", wrEvent.Action, wrEvent.WorkflowRun.Name, wrEvent.WorkflowRun.Conclusion, wrEvent.Repository.FullName)
