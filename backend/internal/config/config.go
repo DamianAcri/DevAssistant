@@ -1,6 +1,7 @@
 package config
 
 import (
+	"log"
 	"os"
 	"github.com/joho/godotenv"
 )
@@ -9,10 +10,17 @@ type Config struct {
 	Port string
 	Env string
 	GitHubWebhookSecret string
+	GitHubToken string
 }
 
 func LoadConfig() Config {
-	godotenv.Load("../../.env") // Obtain the env file info 
+	err := godotenv.Load(".env")
+	if err != nil {
+		err = godotenv.Load("../../.env")
+		if err != nil {
+			log.Println("warning: .env file not found")
+		}
+	} // Obtain the env file info 
 
 	port := os.Getenv("PORT") // whatever we have in the .env file
 	if port == "" {
@@ -25,11 +33,13 @@ func LoadConfig() Config {
 	}
 
 	webhookSecret := os.Getenv("GITHUB_WEBHOOK_SECRET")
+	githubToken := os.Getenv("GITHUB_TOKEN")
 
 	return Config {
 		Port: port,
 		Env: env,
 		GitHubWebhookSecret: webhookSecret,
+		GitHubToken: githubToken,
 	}
 
 }
