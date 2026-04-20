@@ -11,6 +11,7 @@ type Config struct {
 	Env string
 	GitHubWebhookSecret string
 	GitHubToken string
+	DatabaseURL string
 }
 
 func LoadConfig() Config {
@@ -34,12 +35,14 @@ func LoadConfig() Config {
 
 	webhookSecret := os.Getenv("GITHUB_WEBHOOK_SECRET")
 	githubToken := os.Getenv("GITHUB_TOKEN")
+	databaseURL := os.Getenv("DATABASE_URL")
 
 	return Config {
 		Port: port,
 		Env: env,
 		GitHubWebhookSecret: webhookSecret,
 		GitHubToken: githubToken,
+		DatabaseURL: databaseURL,
 	}
 
 }
